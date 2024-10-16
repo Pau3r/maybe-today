@@ -3,6 +3,7 @@ require "test_helper"
 class PostsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @post = posts(:one)
+    sign_in users(:testuser)
   end
 
   test "should get index" do
@@ -21,6 +22,13 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to post_url(Post.last)
+  end
+
+  test "should fail to create post without login" do
+    sign_out users(:testuser)
+    assert_no_difference("Post.count") do
+      post posts_url, params: { post: { title: @post.title, content: @post.content } }
+    end
   end
 
   test "should show post" do

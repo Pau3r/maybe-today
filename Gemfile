@@ -61,3 +61,5 @@ end
 gem "erb", "~> 4.0"
 
 gem "trix-rails", "~> 2.4"
+
+gem "devise", "~> 4.9"
